@@ -58,19 +58,28 @@ class GameFragment : Fragment() {
 
         fun onCorrect() {
             viewModel.onCorrect();
-            updateScoreText()
-            updateWordText()
         }
 
         fun onSkip() {
             viewModel.onSkip();
-            updateScoreText()
-            updateWordText()
         }
 
         binding.correctButton.setOnClickListener { onCorrect() }
         binding.skipButton.setOnClickListener { onSkip() }
         binding.endGameButton.setOnClickListener { onEndGame() }
+
+        /** Setting up LiveData observation relationship **/
+        viewModel.score.observe(this, Observer { newScore ->
+            binding.scoreText.text = newScore.toString()
+        })
+
+        /** Setting up LiveData observation relationship **/
+        viewModel.word.observe(this, Observer { newWord ->
+            binding.wordText.text = newWord
+        })
+
+
+
         viewModel.score.observe(this, Observer { newScore ->
             binding.scoreText.text = newScore.toString()
 
@@ -90,15 +99,6 @@ class GameFragment : Fragment() {
 
     }
 
-
-    /** Methods for updating the UI **/
-    private fun updateWordText() {
-        binding.wordText.text = viewModel.word.value
-    }
-
-    private fun updateScoreText() {
-        binding.scoreText.text = viewModel.score.value.toString()
-    }
 
     private fun onEndGame() {
         gameFinished()
