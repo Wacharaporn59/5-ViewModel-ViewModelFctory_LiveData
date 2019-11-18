@@ -60,7 +60,6 @@ class GameFragment : Fragment() {
         // to all the data in the ViewModel
         binding.gameViewModel = viewModel
         binding.lifecycleOwner = this
-        binding.lifecycleOwner = this
 
 
         // Observer for the Game finished event
